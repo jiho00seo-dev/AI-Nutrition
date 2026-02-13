@@ -1,0 +1,4 @@
+config.js
+.gemini/
+*.log
+node_modules/

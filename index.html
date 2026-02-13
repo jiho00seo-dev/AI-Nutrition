@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Supplement Analyzer | 스마트 영양제 분석기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="app-container">
+        <header class="glass-header">
+            <h1 class="logo">AI Nutrition <span class="accent">Analyzer</span></h1>
+            <p class="tagline">당신의 영양제 스택, AI로 완벽하게 분석하세요.</p>
+        </header>
+
+        <nav class="tab-menu">
+            <button id="tab-interaction" class="tab-btn active">궁합 분석</button>
+            <button id="tab-timing" class="tab-btn">복용 시기 가이드</button>
+        </nav>
+
+        <section id="interaction-view" class="view-section">
+            <section class="input-section glass-card">
+                <div class="input-group">
+                    <input type="text" id="supplement-input" placeholder="영양제 이름을 입력하세요" autocomplete="off">
+                    <button id="add-btn" class="primary-btn">추가하기</button>
+                </div>
+                <p class="input-hint">(예: 비타민 C, 칼슘, 철분 등)</p>
+                <div id="supplement-stack" class="stack-container">
+                    <!-- 추가된 영양제 칩들이 여기에 표시됩니다 -->
+                </div>
+            </section>
+
+            <section class="action-section">
+                <button id="analyze-btn" class="analyze-btn disabled" disabled>스택 분석 시작하기 ✨</button>
+            </section>
+
+            <section id="result-section" class="result-section glass-card hidden">
+                <div id="loading-state" class="loading-state hidden">
+                    <div class="spinner"></div>
+                    <p>AI 전문 지식을 검색하여 스택을 분석 중입니다...</p>
+                </div>
+                <div id="result-container" class="result-container">
+                    <div class="result-header">
+                        <h2>분석 리포트</h2>
+                        <span id="interaction-badge" class="badge">검토 완료</span>
+                    </div>
+                    <div id="result-content" class="result-content">
+                        <!-- 분석 결과가 여기에 동적으로 생성됩니다 -->
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section id="timing-view" class="view-section hidden">
+            <section class="input-section glass-card">
+                <div class="input-group">
+                    <input type="text" id="timing-input" placeholder="영양제 이름을 입력하세요" autocomplete="off">
+                    <button id="timing-check-btn" class="primary-btn">확인하기</button>
+                </div>
+                <p class="input-hint">(예: 홍삼, 마그네슘, 유산균 등)</p>
+                
+                <div id="timing-loading" class="loading-state hidden">
+                    <div class="spinner"></div>
+                    <p>AI가 최적의 복용 시기를 분석 중입니다...</p>
+                </div>
+
+                <div id="timing-result" class="timing-result-container">
+                    <!-- 타이밍 가이드 결과가 여기에 표시됩니다 -->
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

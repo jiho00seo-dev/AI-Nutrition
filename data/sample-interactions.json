@@ -1,0 +1,50 @@
+[
+  {
+    "combination": ["Calcium", "Iron"],
+    "interaction": "Caution",
+    "reason": "Calcium can inhibit the absorption of Iron.",
+    "recommendation": "Take at least 2 hours apart."
+  },
+  {
+    "combination": ["Vitamin C", "Iron"],
+    "interaction": "Good",
+    "reason": "Vitamin C significantly enhances iron absorption.",
+    "recommendation": "Taking them together is recommended."
+  },
+  {
+    "combination": ["Calcium", "Magnesium"],
+    "interaction": "Caution",
+    "reason": "High doses of calcium can compete with magnesium for absorption.",
+    "recommendation": "Ideally taken at different times or in balanced ratios."
+  },
+  {
+    "combination": ["Zinc", "Copper"],
+    "interaction": "Caution",
+    "reason": "High zinc intake can lead to copper deficiency.",
+    "recommendation": "If taking high doses of zinc, consider a supplement with copper."
+  },
+  {
+    "combination": ["Vitamin D", "Vitamin K2"],
+    "interaction": "Excellent",
+    "reason": "They work synergistically to direct calcium to bones and teeth instead of soft tissues.",
+    "recommendation": "Taking them together is highly beneficial."
+  },
+  {
+    "combination": ["B12", "Folate"],
+    "interaction": "Excellent",
+    "reason": "Vitamin B12 and Folate work together for DNA synthesis and red blood cell production.",
+    "recommendation": "Taking them together is recommended for better efficacy."
+  },
+  {
+    "combination": ["Fish Oil", "Ginkgo Biloba"],
+    "interaction": "Warning",
+    "reason": "Both have blood-thinning properties and may increase the risk of bleeding.",
+    "recommendation": "Consult a healthcare provider before combining."
+  },
+  {
+    "combination": ["Probiotics", "Antibiotics"],
+    "interaction": "Caution",
+    "reason": "Antibiotics can kill the beneficial bacteria in probiotics.",
+    "recommendation": "Take at least 2 hours apart from your antibiotic dose."
+  }
+]
