@@ -1,5 +1,9 @@
 // API Key is now managed in config.js (excluded from git)
-const GEMINI_API_KEY = typeof CONFIG !== 'undefined' ? CONFIG.GEMINI_API_KEY : "YOUR_API_KEY_HERE";
+const GEMINI_API_KEY = typeof CONFIG !== 'undefined' ? CONFIG.GEMINI_API_KEY : "";
+
+if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_API_KEY_HERE") {
+    console.warn("⚠️ [Security] GEMINI_API_KEY가 설정되지 않았습니다. config.js 파일을 확인해주세요.");
+}
 
 // 캐시 시스템 (LocalStorage 활용)
 const CACHE_KEY_TIMING = "ai_nutrition_cache_timing";
@@ -123,16 +127,27 @@ async function checkTiming() {
     - 한국어로 친절하면서도 신뢰감 있는 어조를 사용하십시오.`;
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
-        });
+        let data;
+        // Deployment Mode: Use Vercel API if key is missing
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_API_KEY_HERE") {
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            data = await response.json();
+        } else {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+            data = await response.json();
+        }
 
-        const data = await response.json();
-        if (data.error) throw new Error(data.error.message);
+        if (data.error) throw new Error(data.error.message || data.error);
 
         const aiText = data.candidates[0].content.parts[0].text;
         const cleanedJson = cleanJsonResponse(aiText);
@@ -166,7 +181,9 @@ async function checkTiming() {
 
     } catch (error) {
         console.error("복용 시기 분석 오류:", error);
-        timingResult.innerHTML = `<div class="timing-card"><p class="interaction-desc">분석 중 오류가 발생했습니다. (사유: ${error.message})</p></div>`;
+        let errorMsg = error.message;
+        if (!GEMINI_API_KEY && errorMsg.includes("not found")) errorMsg = "API 엔드포인트를 찾을 수 없습니다. Vercel 배포 상태를 확인해주세요.";
+        timingResult.innerHTML = `<div class="timing-card"><p class="interaction-desc">분석 중 오류가 발생했습니다. (사유: ${errorMsg})</p></div>`;
     } finally {
         timingLoading.classList.add('hidden');
     }
@@ -292,16 +309,27 @@ async function analyzeStack() {
     모든 텍스트는 한국어로 작성하십시오.`;
 
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
-            })
-        });
+        let data;
+        // Deployment Mode: Use Vercel API if key is missing
+        if (!GEMINI_API_KEY || GEMINI_API_KEY === "YOUR_API_KEY_HERE") {
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            data = await response.json();
+        } else {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }]
+                })
+            });
+            data = await response.json();
+        }
 
-        const data = await response.json();
-        if (data.error) throw new Error(data.error.message);
+        if (data.error) throw new Error(data.error.message || data.error);
 
         const aiText = data.candidates[0].content.parts[0].text;
         const cleanedJson = cleanJsonResponse(aiText);
@@ -312,7 +340,9 @@ async function analyzeStack() {
 
     } catch (error) {
         console.error("궁합 분석 오류:", error);
-        resultContent.innerHTML = `<p class="interaction-desc">분석 중 오류가 발생했습니다. (사유: ${error.message})</p>`;
+        let errorMsg = error.message;
+        if (!GEMINI_API_KEY && errorMsg.includes("not found")) errorMsg = "API 엔드포인트를 찾을 수 없습니다. Vercel 배포 상태를 확인해주세요.";
+        resultContent.innerHTML = `<p class="interaction-desc">분석 중 오류가 발생했습니다. (사유: ${errorMsg})</p>`;
     } finally {
         loadingState.classList.add('hidden');
         resultContainer.classList.remove('hidden');
